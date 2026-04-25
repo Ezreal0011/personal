@@ -149,10 +149,51 @@ const DataStore = {
      * 创建示例项目（演示用）
      */
     createExampleProject() {
-        // 使用 example.js 中定义的示例数据
-        const exampleProject = JSON.parse(JSON.stringify(EXAMPLE_PROJECT));
-        exampleProject.id = this.generateId();
-        exampleProject.updatedAt = new Date().toISOString();
+        const exampleProject = {
+            id: this.generateId(),
+            name: '卡牌养成资源关系图',
+            version: '0.2',
+            description: '卡牌游戏资源流向示例',
+            updatedAt: new Date().toISOString(),
+            customSubTypes: [
+                { id: 'normal', name: '普通' },
+                { id: 'key', name: '关键' },
+                { id: 'daily', name: '日常' },
+                { id: 'weekly', name: '周常' }
+            ],
+            nodes: [
+                // 系统节点 — 根级父节点（无parentId）带 parentColor 颜色标识和 role 类型
+                // 主线地图系（蓝色，产出系统）
+                { id: 'n1', name: '主线地图', type: 'system', subType: null, level: 1, parentId: null, parentColor: '#3b82f6', role: 'output', x: 400, y: 80, tags: ['PVE'], description: '主要推图系统', inputPorts: [{id:'in0',name:'输入'}], outputPorts: [{id:'out0',name:'产出'}] },
+                { id: 'n2', name: '普通章节', type: 'system', subType: 'normal', level: 2, parentId: 'n1', x: 250, y: 180, tags: [], description: '', inputPorts: [{id:'in0',name:'输入'}], outputPorts: [{id:'out0',name:'产出'}] },
+                { id: 'n3', name: '关键章节', type: 'system', subType: 'key', level: 2, parentId: 'n1', x: 550, y: 180, tags: ['重要'], description: '重要关卡', inputPorts: [{id:'in0',name:'输入'}], outputPorts: [{id:'out0',name:'产出'},{id:'out1',name:'首通奖励'}] },
+                { id: 'n7', name: '活动副本', type: 'system', subType: 'daily', level: 2, parentId: 'n1', x: 700, y: 280, tags: ['日常'], description: '每日活动副本', inputPorts: [{id:'in0',name:'体力输入'}], outputPorts: [{id:'out0',name:'奖励产出'},{id:'out1',name:'额外掉落'}] },
+                // 人物养成系（紫色，消耗系统）
+                { id: 'n4', name: '人物养成', type: 'system', subType: null, level: 1, parentId: null, parentColor: '#8b5cf6', role: 'consume', x: 400, y: 380, tags: ['核心'], description: '角色成长系统', inputPorts: [{id:'in0',name:'经验输入'},{id:'in1',name:'材料输入'}], outputPorts: [{id:'out0',name:'角色成长'}] },
+                { id: 'n5', name: '升级', type: 'system', subType: null, level: 2, parentId: 'n4', x: 300, y: 480, tags: [], description: '角色等级提升', inputPorts: [{id:'in0',name:'输入'}], outputPorts: [{id:'out0',name:'输出'}] },
+                { id: 'n6', name: '进阶', type: 'system', subType: null, level: 2, parentId: 'n4', x: 520, y: 480, tags: [], description: '角色品质提升', inputPorts: [{id:'in0',name:'输入'}], outputPorts: [{id:'out0',name:'输出'}] },
+                
+                // 资源节点
+                { id: 'r1', name: '经验书', type: 'resource', resourceType: 'material', rarity: 'uncommon', x: 200, y: 320, tags: [], description: '用于角色升级的经验道具', inputPorts: [], outputPorts: [{id:'out0',name:'输出'}] },
+                { id: 'r2', name: '突破道具', type: 'resource', resourceType: 'material', rarity: 'rare', x: 650, y: 380, tags: [], description: '角色进阶必需材料', inputPorts: [], outputPorts: [{id:'out0',name:'输出'}] },
+                { id: 'r3', name: '金币', type: 'resource', resourceType: 'currency', rarity: 'common', x: 100, y: 480, tags: [], description: '通用货币', inputPorts: [], outputPorts: [{id:'out0',name:'输出'}] },
+                { id: 'r4', name: '体力', type: 'resource', resourceType: 'stamina', rarity: 'common', x: 750, y: 180, tags: [], description: '行动点数', inputPorts: [], outputPorts: [{id:'out0',name:'输出'}] },
+            ],
+            edges: [
+                // 产出关系（output）
+                { id: 'e1', source: 'n2', target: 'r1', type: 'output', valueType: 'range', minValue: 10, maxValue: 50, condition: '通关奖励' },
+                { id: 'e2', source: 'n3', target: 'r1', type: 'output', valueType: 'range', minValue: 30, maxValue: 80, condition: '首通奖励翻倍' },
+                { id: 'e3', source: 'n3', target: 'r2', type: 'output', valueType: 'fixed', value: 5, condition: '关键章节专属掉落' },
+                { id: 'e4', source: 'n7', target: 'r1', type: 'output', valueType: 'range', minValue: 20, maxValue: 60, condition: '活动加成' },
+                { id: 'e5', source: 'n2', target: 'r3', type: 'output', valueType: 'fixed', value: 500, condition: '基础金币奖励' },
+                // 消耗关系（consume）
+                { id: 'e6', source: 'n5', target: 'r1', type: 'consume', valueType: 'fixed', value: 100, condition: '每次升级消耗' },
+                { id: 'e7', source: 'n6', target: 'r2', type: 'consume', valueType: 'fixed', value: 20, condition: '每次进阶消耗' },
+                { id: 'e8', source: 'n5', target: 'r3', type: 'consume', valueType: 'fixed', value: 1000, condition: '升级费用' },
+                { id: 'e9', source: 'n2', target: 'r4', type: 'consume', valueType: 'fixed', value: 8, condition: '每次战斗消耗体力' },
+                { id: 'e10', source: 'n7', target: 'r4', type: 'consume', valueType: 'fixed', value: 12, condition: '活动副本消耗' },
+            ]
+        };
         
         this.projects.push(exampleProject);
         this.save();
