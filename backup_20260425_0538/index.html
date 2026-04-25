@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏资源流向蓝图工具</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 项目列表页 -->
+    <div id="page-home" class="page active">
+        <header class="home-header">
+            <h1><i class="fas fa-project-diagram"></i> 游戏资源流向蓝图工具</h1>
+        </header>
+        <main class="home-main">
+            <div class="home-toolbar">
+                <button class="btn btn-primary" onclick="App.createNewProject()">
+                    <i class="fas fa-plus"></i> 新建项目
+                </button>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="project-search" placeholder="搜索项目..." oninput="App.searchProjects(this.value)">
+                </div>
+            </div>
+            <div id="project-list" class="project-list">
+                <!-- 项目卡片动态生成 -->
+            </div>
+        </main>
+    </div>
+
+    <!-- 编辑器页面 -->
+    <div id="page-editor" class="page">
+        <!-- 顶部工具栏 -->
+        <header class="editor-toolbar">
+            <div class="toolbar-left">
+                <button class="btn btn-icon" onclick="App.goHome()" title="返回首页">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="project-name" id="current-project-name">未命名项目</span>
+                <span class="project-version" id="current-project-version">v0.1</span>
+            </div>
+            <div class="toolbar-center">
+                <button class="btn btn-icon" onclick="Editor.saveProject()" title="保存">
+                    <i class="fas fa-save"></i> 保存
+                </button>
+                <button class="btn btn-icon" onclick="Editor.cloudSync()" title="云同步" style="color:var(--primary);">
+                    <i class="fas fa-cloud-upload-alt"></i> 云同步
+                </button>
+                <button class="btn btn-icon" onclick="Editor.undo()" title="撤销">
+                    <i class="fas fa-undo"></i>
+                </button>
+                <button class="btn btn-icon" onclick="Editor.redo()" title="重做">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+                <button class="btn btn-toggle active" onclick="Editor.toggleView('system')" data-view="system" title="系统视图">
+                    系统视图
+                </button>
+                <button class="btn btn-toggle" onclick="Editor.toggleView('resource')" data-view="resource" title="资源视图">
+                    资源视图
+                </button>
+                <div class="toolbar-divider"></div>
+                <div class="filter-dropdown">
+                    <button class="btn btn-icon" onclick="Editor.toggleFilter()">
+                        <i class="fas fa-filter"></i> 筛选
+                    </button>
+                    <div id="filter-panel" class="filter-panel hidden">
+                        <label><input type="checkbox" checked onchange="Editor.filterByType('system', this.checked)"> 系统节点</label>
+                        <label><input type="checkbox" checked onchange="Editor.filterByType('resource', this.checked)"> 资源节点</label>
+                        <label><input type="checkbox" checked onchange="Editor.filterByRelation('output', this.checked)"> 产出关系</label>
+                        <label><input type="checkbox" checked onchange="Editor.filterByRelation('consume', this.checked)"> 消耗关系</label>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索节点..." oninput="Editor.searchNodes(this.value)">
+                </div>
+                <div class="toolbar-divider"></div>
+                <button class="btn btn-icon" onclick="Canvas.autoLayout()" title="自动布局 (L)">
+                    <i class="fas fa-object-group"></i>
+                </button>
+                <button class="btn btn-icon" onclick="Canvas.resetView()" title="重置视图 (R)">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                </button>
+                <button class="btn btn-icon" onclick="Canvas.expandCanvas()" title="扩大画布">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="btn btn-icon" onclick="Canvas.shrinkCanvas()" title="缩小画布">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+                <button class="btn btn-icon" onclick="Editor.exportData()" title="导出">
+                    <i class="fas fa-download"></i> 导出
+                </button>
+                <button class="btn btn-icon" onclick="App.triggerImport()" title="导入">
+                    <i class="fas fa-upload"></i> 导入
+                </button>
+                <div class="toolbar-divider"></div>
+                <button class="btn btn-icon" onclick="App.toggleTheme()" title="切换主题">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="btn btn-icon" onclick="App.toggleShortcutHelp()" title="快捷键帮助">
+                    <i class="fas fa-keyboard"></i>
+                </button>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-primary" onclick="Editor.openAnalysis()" title="资源分析">
+                    <i class="fas fa-chart-network"></i> 资源分析
+                </button>
+            </div>
+        </header>
+
+        <!-- 主内容区 -->
+        <div class="editor-main">
+            <!-- 左侧面板 -->
+            <aside class="left-panel">
+                <div class="panel-tabs">
+                    <button class="tab-btn active" data-tab="tree" onclick="LeftPanel.switchTab('tree')">
+                        <i class="fas fa-sitemap"></i> 系统树
+                    </button>
+                    <button class="tab-btn" data-tab="resources" onclick="LeftPanel.switchTab('resources')">
+                        <i class="fas fa-boxes"></i> 资源库
+                    </button>
+                </div>
+
+                <!-- 系统树Tab -->
+                <div id="tab-tree" class="tab-content active">
+                    <div class="panel-actions">
+                        <button class="btn btn-sm" onclick="LeftPanel.addSystemNode()">
+                            <i class="fas fa-plus"></i> 新建系统
+                        </button>
+                    </div>
+                    <div id="system-tree" class="tree-container">
+                        <!-- 系统树动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 资源库Tab -->
+                <div id="tab-resources" class="tab-content">
+                    <div class="panel-actions">
+                        <button class="btn btn-sm" onclick="LeftPanel.addResourceType()" title="新建资源类型（拖拽到画布可创建节点）">
+                            <i class="fas fa-plus"></i> 新建资源类型
+                        </button>
+                        <button class="btn btn-sm" onclick="LeftPanel.addResource()">
+                            <i class="fas fa-file-alt"></i> 新建资源
+                        </button>
+                    </div>
+                    <div id="resource-type-list" class="resource-type-list">
+                        <!-- 资源类型列表动态生成 -->
+                    </div>
+                    <div class="resource-categories">
+                        <div class="category-item active" data-category="all" onclick="LeftPanel.filterResources('all')">全部</div>
+                        <div class="category-item" data-category="currency" onclick="LeftPanel.filterResources('currency')">货币</div>
+                        <div class="category-item" data-category="material" onclick="LeftPanel.filterResources('material')">养成材料</div>
+                        <div class="category-item" data-category="stamina" onclick="LeftPanel.filterResources('stamina')">体力类</div>
+                        <div class="category-item" data-category="custom" onclick="LeftPanel.filterResources('custom')">自定义</div>
+                    </div>
+                    <div id="resource-list" class="resource-list">
+                        <!-- 资源实例列表动态生成 -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 中间画布区域 -->
+            <main class="canvas-area">
+                <div id="canvas-container" class="canvas-container">
+                    <svg id="canvas-svg" class="canvas-svg">
+                        <defs>
+                            <!-- 箭头标记定义 -->
+                            <marker id="arrow-output" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#22c55e"/>
+                            </marker>
+                            <marker id="arrow-consume" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#ef4444"/>
+                            </marker>
+                            <marker id="arrow-default" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8"/>
+                            </marker>
+                        </defs>
+                        <g id="edges-layer"></g>
+                        <g id="nodes-layer"></g>
+                    </svg>
+                    <div id="nodes-overlay" class="nodes-overlay"></div>
+                </div>
+                <!-- 小地图 -->
+                <div id="mini-map" class="mini-map" title="小地图 - 拖拽可快速定位">
+                    <canvas id="mini-map-canvas" width="150" height="100"></canvas>
+                    <div id="mini-map-viewport" class="mini-map-viewport"></div>
+                </div>
+
+                <div class="canvas-statusbar">
+                    <span id="zoom-level"><i class="fas fa-search-plus"></i> 缩放 100%</span>
+                    <span id="node-count">节点数: 0</span>
+                    <span id="edge-count">关系数: 0</span>
+                </div>
+            </main>
+
+            <!-- 右侧属性面板 -->
+            <aside class="right-panel">
+                <div id="property-panel" class="property-panel">
+                    <div class="panel-placeholder">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <p>点击画布中的节点或连线<br>查看详细属性</p>
+                    </div>
+                </div>
+                <div id="node-property" class="property-content hidden">
+                    <div class="property-header">
+                        <h3 id="prop-node-name">节点名称</h3>
+                        <span class="badge" id="prop-node-type">类型</span>
+                    </div>
+                    <div class="property-body">
+                        <!-- 资源数量配置（仅资源节点显示） -->
+                        <div class="prop-group" id="prop-group-quantity" style="display:none;">
+                            <label><i class="fas fa-hashtag"></i> 资源数量</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input type="number" id="prop-input-quantity" min="0" placeholder="配置数量以显示节点卡"
+                                    oninput="PropertyPanel.updateResourceQuantity(this.value)"
+                                    style="flex:1;padding:8px 12px;border:1px solid var(--border-color);border-radius:6px;font-size:13px;background:var(--bg-secondary);outline:none;">
+                                <button class="btn btn-sm btn-primary" onclick="PropertyPanel.toggleResourceNodeVisibility(true)"
+                                    title="在画布上显示此节点">
+                                    显示
+                                </button>
+                                <button class="btn btn-sm" onclick="PropertyPanel.toggleResourceNodeVisibility(false)" title="从画布隐藏此节点">
+                                    隐藏
+                                </button>
+                            </div>
+                            <p style="font-size:11px;color:var(--text-light);margin-top:4px;">配置数量后节点卡片将在画布上显示</p>
+                        </div>
+                        <!-- 资源节点颜色配置 -->
+                        <div class="prop-group" id="prop-group-res-color" style="display:none;">
+                            <label><i class="fas fa-palette"></i> 节点颜色</label>
+                            <div class="color-presets" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                                <span class="color-preset" style="background:#f59e0b" title="金色" onclick="PropertyPanel.updateResourceColor('#f59e0b')"></span>
+                                <span class="color-preset" style="background:#3b82f6" title="蓝色" onclick="PropertyPanel.updateResourceColor('#3b82f6')"></span>
+                                <span class="color-preset" style="background:#8b5cf6" title="紫色" onclick="PropertyPanel.updateResourceColor('#8b5cf6')"></span>
+                                <span class="color-preset" style="background:#10b981" title="绿色" onclick="PropertyPanel.updateResourceColor('#10b981')"></span>
+                                <span class="color-preset" style="background:#ef4444" title="红色" onclick="PropertyPanel.updateResourceColor('#ef4444')"></span>
+                                <span class="color-preset" style="background:#ec4899" title="粉色" onclick="PropertyPanel.updateResourceColor('#ec4899')"></span>
+                                <span class="color-preset" style="background:#06b6d4" title="青色" onclick="PropertyPanel.updateResourceColor('#06b6d4')"></span>
+                                <span class="color-preset" style="background:#84cc16" title="lime" onclick="PropertyPanel.updateResourceColor('#84cc16')"></span>
+                            </div>
+                            <input type="color" id="prop-input-res-color" 
+                                oninput="PropertyPanel.updateResourceColor(this.value)"
+                                style="width:100%;height:36px;cursor:pointer;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-secondary);">
+                        </div>
+                        <div class="prop-group">
+                            <label>名称</label>
+                            <input type="text" id="prop-input-name" oninput="PropertyPanel.updateNodeProperty('name', this.value)">
+                        </div>
+                        <div class="prop-group" id="prop-group-level">
+                            <label>层级</label>
+                            <input type="number" id="prop-input-level" min="1" oninput="PropertyPanel.updateNodeProperty('level', this.value)">
+                        </div>
+        <div class="prop-group" id="prop-group-parent">
+            <label>父节点</label>
+            <select id="prop-select-parent" onchange="PropertyPanel.updateNodeProperty('parentId', this.value)">
+                <option value="">无（根节点）</option>
+            </select>
+        </div>
+        <!-- 根级父节点配置（仅无父节点的系统节点可见） -->
+        <div class="prop-group" id="prop-group-root-config" style="display:none;">
+            <label><i class="fas fa-tag"></i> 角色定义</label>
+            <input type="text" id="prop-input-role-name" placeholder="如：资源产出、养成消耗..."
+                style="width:100%;padding:7px 10px;border:1px solid var(--border-color);border-radius:6px;font-size:13px;background:var(--bg-secondary);outline:none;margin-bottom:8px;"
+                oninput="PropertyPanel.updateNodeProperty('roleName', this.value)">
+            <!-- 分组颜色（图标背景色） -->
+            <p style="font-size:11px;color:var(--text-light);margin-bottom:6px;">分组颜色（图标背景色）：</p>
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+                <input type="color" id="prop-input-parent-color"
+                    onchange="PropertyPanel.updateParentColor(this.value)"
+                    style="width:36px;height:32px;cursor:pointer;border:1px solid var(--border-color);border-radius:4px;background:var(--bg-secondary);">
+                <span id="prop-parent-color-hex" style="font-size:12px;font-family:monospace;color:var(--text-light);">#3b82f6</span>
+            </div>
+            <div class="color-presets" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;">
+                <span class="color-preset" style="background:#3b82f6" onclick="PropertyPanel.setParentColor('#3b82f6')" title="蓝色"></span>
+                <span class="color-preset" style="background:#8b5cf6" onclick="PropertyPanel.setParentColor('#8b5cf6')" title="紫色"></span>
+                <span class="color-preset" style="background:#10b981" onclick="PropertyPanel.setParentColor('#10b981')" title="绿色"></span>
+                <span class="color-preset" style="background:#f59e0b" onclick="PropertyPanel.setParentColor('#f59e0b')" title="金色"></span>
+                <span class="color-preset" style="background:#ef4444" onclick="PropertyPanel.setParentColor('#ef4444')" title="红色"></span>
+                <span class="color-preset" style="background:#ec4899" onclick="PropertyPanel.setParentColor('#ec4899')" title="粉色"></span>
+                <span class="color-preset" style="background:#06b6d4" onclick="PropertyPanel.setParentColor('#06b6d4')" title="青色"></span>
+                <span class="color-preset" style="background:#84cc16" onclick="PropertyPanel.setParentColor('#84cc16')" title="lime"></span>
+            </div>
+            <!-- 角色边框颜色（子节点卡边框） -->
+            <p style="font-size:11px;color:var(--text-light);margin-bottom:6px;">角色边框颜色（子节点卡边框）：</p>
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                <input type="color" id="prop-input-role-color" 
+                    onchange="PropertyPanel.updateRoleColor(this.value)"
+                    oninput="PropertyPanel.updateRoleColorUI(this.value)"
+                    style="width:36px;height:32px;cursor:pointer;border:1px solid var(--border-color);border-radius:4px;background:var(--bg-secondary);">
+                <span id="prop-role-color-hex" style="font-size:12px;font-family:monospace;color:var(--text-light);">#f59e0b</span>
+            </div>
+            <div class="color-presets" style="display:flex;gap:5px;flex-wrap:wrap;">
+                <span class="color-preset" style="background:#3b82f6" onclick="PropertyPanel.setRoleColor('#3b82f6')" title="蓝色"></span>
+                <span class="color-preset" style="background:#8b5cf6" onclick="PropertyPanel.setRoleColor('#8b5cf6')" title="紫色"></span>
+                <span class="color-preset" style="background:#10b981" onclick="PropertyPanel.setRoleColor('#10b981')" title="绿色"></span>
+                <span class="color-preset" style="background:#f59e0b" onclick="PropertyPanel.setRoleColor('#f59e0b')" title="金色"></span>
+                <span class="color-preset" style="background:#ef4444" onclick="PropertyPanel.setRoleColor('#ef4444')" title="红色"></span>
+                <span class="color-preset" style="background:#ec4899" onclick="PropertyPanel.setRoleColor('#ec4899')" title="粉色"></span>
+                <span class="color-preset" style="background:#06b6d4" onclick="PropertyPanel.setRoleColor('#06b6d4')" title="青色"></span>
+                <span class="color-preset" style="background:#84cc16" onclick="PropertyPanel.setRoleColor('#84cc16')" title="lime"></span>
+            </div>
+        </div>
+                        <div class="prop-group" id="prop-group-type-detail">
+                            <label>节点子类型</label>
+                            <div class="subtype-row">
+                                <select id="prop-select-subtype" onchange="PropertyPanel.updateNodeProperty('subType', this.value)">
+                                    <option value="">无</option>
+                                </select>
+                                <button class="btn btn-sm btn-icon" onclick="PropertyPanel.openSubTypeManager()" title="自定义子类型">
+                                    <i class="fas fa-cog"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- ========== 端口管理：输入端口 ========== -->
+                        <div class="prop-group prop-group-ports">
+                            <div class="ports-header">
+                                <label><i class="fas fa-arrow-right consume-color"></i> 输入端口</label>
+                                <button class="btn btn-sm" onclick="PropertyPanel.addPort('input')">
+                                    <i class="fas fa-plus"></i> 添加
+                                </button>
+                            </div>
+                            <div id="prop-input-ports-list" class="ports-list">
+                                <!-- 动态生成 -->
+                            </div>
+                        </div>
+
+                        <!-- ========== 端口管理：输出端口 ========== -->
+                        <div class="prop-group prop-group-ports">
+                            <div class="ports-header">
+                                <label><i class="fas fa-arrow-left output-color"></i> 输出端口</label>
+                                <button class="btn btn-sm" onclick="PropertyPanel.addPort('output')">
+                                    <i class="fas fa-plus"></i> 添加
+                                </button>
+                            </div>
+                            <div id="prop-output-ports-list" class="ports-list">
+                                <!-- 动态生成 -->
+                            </div>
+                        </div>
+
+                        <div class="prop-group" id="prop-group-rarity">
+                            <label>稀有度</label>
+                            <select id="prop-select-rarity" onchange="PropertyPanel.updateNodeProperty('rarity', this.value)">
+                                <option value="common">普通</option>
+                                <option value="uncommon">优秀</option>
+                                <option value="rare">稀有</option>
+                                <option value="epic">史诗</option>
+                                <option value="legendary">传说</option>
+                            </select>
+                        </div>
+                        <div class="prop-group">
+                            <label>标签</label>
+                            <input type="text" id="prop-input-tags" placeholder="用逗号分隔" oninput="PropertyPanel.updateNodeProperty('tags', this.value)">
+                        </div>
+                        <div class="prop-group">
+                            <label>描述</label>
+                            <textarea id="prop-textarea-desc" rows="3" oninput="PropertyPanel.updateNodeProperty('description', this.value)"></textarea>
+                        </div>
+                        <div class="prop-actions">
+                            <button class="btn btn-danger btn-sm" onclick="PropertyPanel.deleteCurrentNode()">
+                                <i class="fas fa-trash"></i> 删除节点
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="edge-property" class="property-content hidden">
+                    <div class="property-header">
+                        <h3>关系属性</h3>
+                        <span class="badge" id="prop-edge-type-badge">产出</span>
+                    </div>
+                    <div class="property-body">
+                        <div class="prop-group">
+                            <label>关系类型</label>
+                            <select id="prop-edge-type" onchange="PropertyPanel.updateEdgeProperty('type', this.value)">
+                                <option value="output">产出</option>
+                                <option value="consume">消耗</option>
+                                <option value="require">需求</option>
+                                <option value="unlock">解锁</option>
+                            </select>
+                        </div>
+                        <div class="prop-group">
+                            <label>数值类型</label>
+                            <select id="prop-edge-value-type" onchange="PropertyPanel.updateValueFields(this.value); PropertyPanel.updateEdgeProperty('valueType', this.value)">
+                                <option value="fixed">固定值</option>
+                                <option value="range">范围值</option>
+                                <option value="dynamic">动态值</option>
+                                <option value="percentage">百分比</option>
+                            </select>
+                        </div>
+                        <!-- 分流配置（当一个输出端口连接多个输入端口时显示） -->
+                        <div class="prop-group" id="prop-group-split" style="display:none;">
+                            <label><i class="fas fa-project-diagram"></i> 分流配置</label>
+                            <select id="prop-edge-split-type" onchange="PropertyPanel.updateSplitType(this.value)" style="width:100%;padding:8px;margin-bottom:8px;">
+                                <option value="value">数值</option>
+                                <option value="percentage">概率</option>
+                                <option value="percentage-amount">概率+数量</option>
+                            </select>
+                            <div id="prop-split-value-container">
+                                <input type="text" id="prop-edge-split-value" placeholder="数值或概率如30%" 
+                                    oninput="PropertyPanel.updateSplitValue(this.value)"
+                                    style="width:100%;padding:8px;border:1px solid var(--border-color);border-radius:6px;">
+                            </div>
+                            <div id="prop-split-amount-container" style="display:none;margin-top:8px;">
+                                <input type="number" id="prop-edge-split-amount" placeholder="数量" value="1" min="1"
+                                    oninput="PropertyPanel.updateSplitAmount(this.value)"
+                                    style="width:100%;padding:8px;border:1px solid var(--border-color);border-radius:6px;">
+                            </div>
+                        </div>
+                        <div class="prop-group" id="prop-edge-value-fixed">
+                            <label>数值</label>
+                            <input type="number" id="prop-edge-value" oninput="PropertyPanel.updateEdgeProperty('value', this.value)">
+                        </div>
+                        <div class="prop-group hidden" id="prop-edge-value-range">
+                            <label>数值范围</label>
+                            <div class="range-inputs">
+                                <input type="number" id="prop-edge-min" placeholder="最小" oninput="PropertyPanel.updateEdgeProperty('minValue', this.value)">
+                                <span>-</span>
+                                <input type="number" id="prop-edge-max" placeholder="最大" oninput="PropertyPanel.updateEdgeProperty('maxValue', this.value)">
+                            </div>
+                        </div>
+                        <div class="prop-group">
+                            <label>条件/备注</label>
+                            <textarea id="prop-edge-condition" rows="2" oninput="PropertyPanel.updateEdgeProperty('condition', this.value)"></textarea>
+                        </div>
+                        <div class="prop-group">
+                            <label><i class="fas fa-palette"></i> 连线颜色</label>
+                            <div class="color-presets" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                                <span class="color-preset" style="background:#22c55e" title="绿色(产出)" onclick="PropertyPanel.updateEdgeColor('#22c55e')"></span>
+                                <span class="color-preset" style="background:#ef4444" title="红色(消耗)" onclick="PropertyPanel.updateEdgeColor('#ef4444')"></span>
+                                <span class="color-preset" style="background:#3b82f6" title="蓝色" onclick="PropertyPanel.updateEdgeColor('#3b82f6')"></span>
+                                <span class="color-preset" style="background:#f59e0b" title="金色" onclick="PropertyPanel.updateEdgeColor('#f59e0b')"></span>
+                                <span class="color-preset" style="background:#8b5cf6" title="紫色" onclick="PropertyPanel.updateEdgeColor('#8b5cf6')"></span>
+                                <span class="color-preset" style="background:#06b6d4" title="青色" onclick="PropertyPanel.updateEdgeColor('#06b6d4')"></span>
+                                <span class="color-preset" style="background:#ec4899" title="粉色" onclick="PropertyPanel.updateEdgeColor('#ec4899')"></span>
+                                <span class="color-preset" style="background:#94a3b8" title="灰色" onclick="PropertyPanel.updateEdgeColor('#94a3b8')"></span>
+                            </div>
+                            <input type="color" id="prop-input-edge-color"
+                                oninput="PropertyPanel.updateEdgeColor(this.value)"
+                                style="width:100%;height:36px;cursor:pointer;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-secondary);">
+                        </div>
+                        <div class="prop-actions">
+                            <button class="btn btn-danger btn-sm" onclick="PropertyPanel.deleteCurrentEdge()">
+                                <i class="fas fa-trash"></i> 删除关系
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 资源类型编辑面板（点击左侧资源节点/资源类型时显示） -->
+                <div id="resource-type-edit" class="property-content hidden">
+                    <div class="property-header">
+                        <h3 id="edit-res-type-title">资源类型</h3>
+                        <span class="badge resource">类型编辑</span>
+                    </div>
+                    <div class="property-body">
+                        <input type="hidden" id="edit-res-type-id">
+                        <!-- 统计卡片：实例数 / 产出来源 / 消耗去向 -->
+                        <div class="rt-stats-row" id="edit-rt-stats"></div>
+                        <!-- 编辑区：名称 + 颜色 -->
+                        <div class="prop-group">
+                            <label><i class="fas fa-tag"></i> 类型名称</label>
+                            <input type="text" id="edit-res-type-name"
+                                style="width:100%;padding:8px 12px;border:1px solid var(--border-color);border-radius:6px;font-size:13px;background:var(--bg-secondary);outline:none;"
+                                oninput="PropertyPanel.updateResourceTypeName(this.value)">
+                        </div>
+                        <div class="prop-group">
+                            <label><i class="fas fa-palette"></i> 类型颜色</label>
+                            <div class="color-presets" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                                <span class="color-preset" style="background:#f59e0b" title="金色" onclick="PropertyPanel.setResourceTypeColor('#f59e0b')"></span>
+                                <span class="color-preset" style="background:#3b82f6" title="蓝色" onclick="PropertyPanel.setResourceTypeColor('#3b82f6')"></span>
+                                <span class="color-preset" style="background:#8b5cf6" title="紫色" onclick="PropertyPanel.setResourceTypeColor('#8b5cf6')"></span>
+                                <span class="color-preset" style="background:#10b981" title="绿色" onclick="PropertyPanel.setResourceTypeColor('#10b981')"></span>
+                                <span class="color-preset" style="background:#ef4444" title="红色" onclick="PropertyPanel.setResourceTypeColor('#ef4444')"></span>
+                                <span class="color-preset" style="background:#ec4899" title="粉色" onclick="PropertyPanel.setResourceTypeColor('#ec4899')"></span>
+                                <span class="color-preset" style="background:#06b6d4" title="青色" onclick="PropertyPanel.setResourceTypeColor('#06b6d4')"></span>
+                                <span class="color-preset" style="background:#84cc16" title="lime" onclick="PropertyPanel.setResourceTypeColor('#84cc16')"></span>
+                            </div>
+                            <input type="color" id="edit-res-type-color"
+                                oninput="PropertyPanel.setResourceTypeColor(this.value)"
+                                style="width:100%;height:36px;cursor:pointer;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-secondary);">
+                        </div>
+                        <!-- 被产出自列表 -->
+                        <div class="prop-group">
+                            <label><i class="fas fa-arrow-down output-color"></i> 被产出自</label>
+                            <div id="edit-rt-output-list" class="rt-node-list">
+                                <p class="placeholder-text" style="font-size:12px;">暂无数据</p>
+                            </div>
+                        </div>
+                        <!-- 被消耗于列表 -->
+                        <div class="prop-group">
+                            <label><i class="fas fa-arrow-up consume-color"></i> 被消耗于</label>
+                            <div id="edit-rt-consume-list" class="rt-node-list">
+                                <p class="placeholder-text" style="font-size:12px;">暂无数据</p>
+                            </div>
+                        </div>
+                        <!-- 节点实例列表 -->
+                        <div class="prop-group">
+                            <label><i class="fas fa-list"></i> 实例节点</label>
+                            <div id="edit-res-type-nodes" style="max-height:180px;overflow-y:auto;">
+                                <!-- 动态填充 -->
+                            </div>
+                        </div>
+                        <div class="prop-actions">
+                            <button class="btn btn-danger btn-sm" onclick="PropertyPanel.deleteCurrentResourceType()">
+                                <i class="fas fa-trash"></i> 删除此类型
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 资源类型关联信息面板（点击左侧资源类型时显示） -->
+                <div id="resource-type-info" class="property-content hidden">
+                    <div class="property-header">
+                        <h3 id="rtinfo-title">资源类型</h3>
+                        <span class="badge" id="rtinfo-badge">资源类型</span>
+                    </div>
+                    <div class="property-body">
+                        <div class="rt-stats-row" id="rt-stats"></div>
+                        <div class="prop-group">
+                            <label><i class="fas fa-arrow-down output-color"></i> 被产出自</label>
+                            <div id="rtinfo-output-list" class="rt-node-list">
+                                <p class="placeholder-text" style="font-size:12px;">暂无数据</p>
+                            </div>
+                        </div>
+                        <div class="prop-group">
+                            <label><i class="fas fa-arrow-up consume-color"></i> 被消耗于</label>
+                            <div id="rtinfo-consume-list" class="rt-node-list">
+                                <p class="placeholder-text" style="font-size:12px;">暂无数据</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- 资源分析页面 -->
+    <div id="page-analysis" class="page">
+        <header class="analysis-toolbar">
+            <div class="toolbar-left">
+                <button class="btn btn-icon" onclick="Analysis.goBack()" title="返回编辑页">
+                    <i class="fas fa-arrow-left"></i> 返回编辑页
+                </button>
+                <span class="toolbar-title">资源分析</span>
+            </div>
+            <div class="toolbar-center">
+                <button class="btn btn-toggle active" onclick="Analysis.setMode('all')">
+                    全部资源
+                </button>
+                <button class="btn btn-toggle" onclick="Analysis.setMode('output')">
+                    仅看产出
+                </button>
+                <button class="btn btn-toggle" onclick="Analysis.setMode('consume')">
+                    仅看消耗
+                </button>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索资源..." oninput="Analysis.searchResource(this.value)">
+                </div>
+                <select id="analysis-resource-type" onchange="Analysis.filterByType(this.value)">
+                    <option value="all">所有类型</option>
+                    <option value="currency">货币</option>
+                    <option value="material">养成材料</option>
+                    <option value="stamina">体力类</option>
+                </select>
+            </div>
+        </header>
+        <div class="analysis-main">
+            <aside class="analysis-sidebar">
+                <h3>资源列表</h3>
+                <div id="analysis-resource-list" class="analysis-resource-list">
+                    <!-- 资源列表动态生成 -->
+                </div>
+            </aside>
+            <main class="analysis-canvas">
+                <div id="analysis-canvas-container" class="canvas-container">
+                    <svg id="analysis-svg" class="canvas-svg">
+                        <defs>
+                            <marker id="analysis-arrow-source" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6"/>
+                            </marker>
+                            <marker id="analysis-arrow-target" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#f59e0b"/>
+                            </marker>
+                        </defs>
+                        <g id="analysis-edges-layer"></g>
+                        <g id="analysis-nodes-layer"></g>
+                    </svg>
+                </div>
+            </main>
+            <aside class="analysis-details">
+                <h3>资源详情</h3>
+                <div id="analysis-resource-info" class="analysis-resource-info">
+                    <p class="placeholder-text">选择一个资源查看详情</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- 模态框：新建/编辑项目 -->
+    <div id="modal-project" class="modal hidden">
+        <div class="modal-backdrop" onclick="Modal.close('project')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-project-title">新建项目</h2>
+                <button class="modal-close" onclick="Modal.close('project')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>项目名称</label>
+                    <input type="text" id="input-project-name" placeholder="请输入项目名称">
+                </div>
+                <div class="form-group">
+                    <label>项目描述（可选）</label>
+                    <textarea id="input-project-desc" rows="3" placeholder="请输入项目描述"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="Modal.close('project')">取消</button>
+                <button class="btn btn-primary" onclick="Modal.confirmProject()">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框：新建系统节点 -->
+    <div id="modal-system" class="modal hidden">
+        <div class="modal-backdrop" onclick="Modal.close('system')"></div>
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>新建系统</h2>
+                <button class="modal-close" onclick="Modal.close('system')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>系统名称</label>
+                    <input type="text" id="input-system-name" placeholder="请输入系统名称">
+                </div>
+                <div class="form-group">
+                    <label>父级系统</label>
+                    <select id="input-system-parent">
+                        <option value="">无（根级）</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>子类型</label>
+                    <select id="input-system-subtype">
+                        <option value="normal">普通</option>
+                        <option value="key">关键</option>
+                        <option value="daily">日常</option>
+                        <option value="weekly">周常</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="Modal.close('system')">取消</button>
+                <button class="btn btn-primary" onclick="Modal.confirmSystem()">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框：编辑系统节点 -->
+    <div id="modal-system-edit" class="modal hidden">
+        <div class="modal-backdrop" onclick="Modal.close('system-edit')"></div>
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>编辑系统</h2>
+                <button class="modal-close" onclick="Modal.close('system-edit')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-system-node-id">
+                <div class="form-group">
+                    <label>系统名称</label>
+                    <input type="text" id="edit-system-name" placeholder="请输入系统名称">
+                </div>
+                <div class="form-group">
+                    <label>父级系统</label>
+                    <select id="edit-system-parent">
+                        <option value="">无（根级）</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>子类型</label>
+                    <select id="edit-system-subtype">
+                        <option value="normal">普通</option>
+                        <option value="key">关键</option>
+                        <option value="daily">日常</option>
+                        <option value="weekly">周常</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>层级</label>
+                    <input type="number" id="edit-system-level" min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label>描述</label>
+                    <textarea id="edit-system-desc" rows="3" placeholder="系统描述（可选）"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="Modal.close('system-edit')">取消</button>
+                <button class="btn btn-primary" onclick="Modal.confirmSystemEdit()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框：新建资源 -->
+    <div id="modal-resource" class="modal hidden">
+        <div class="modal-backdrop" onclick="Modal.close('resource')"></div>
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>新建资源</h2>
+                <button class="modal-close" onclick="Modal.close('resource')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>资源名称</label>
+                    <input type="text" id="input-resource-name" placeholder="请输入资源名称">
+                </div>
+                <div class="form-group">
+                    <label>所属类型</label>
+                    <select id="input-resource-type">
+                        <option value="currency">货币</option>
+                        <option value="material">养成材料</option>
+                        <option value="stamina">体力类</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>稀有度</label>
+                    <select id="input-resource-rarity">
+                        <option value="common">普通</option>
+                        <option value="uncommon">优秀</option>
+                        <option value="rare">稀有</option>
+                        <option value="epic">史诗</option>
+                        <option value="legendary">传说</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>备注</label>
+                    <textarea id="input-resource-desc" rows="2" placeholder="资源描述（可选）"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="Modal.close('resource')">取消</button>
+                <button class="btn btn-primary" onclick="Modal.confirmResource()">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框：新建/编辑资源类型 -->
+    <div id="modal-resource-type" class="modal hidden">
+        <div class="modal-backdrop" onclick="Modal.close('resource-type')"></div>
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>新建资源类型</h2>
+                <button class="modal-close" onclick="Modal.close('resource-type')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>类型名称</label>
+                    <input type="text" id="input-rtype-name" placeholder="例如：装备材料、活动代币...">
+                </div>
+                <div class="form-group">
+                    <label>图标</label>
+                    <select id="input-rtype-icon">
+                        <option value="fa-box">盒子 (默认)</option>
+                        <option value="fa-coins">金币/货币</option>
+                        <option value="fa-gem">宝石/材料</option>
+                        <option value="fa-bolt">闪电/体力</option>
+                        <option value="fa-star">星星</option>
+                        <option value="fa-crown">皇冠/稀有</option>
+                        <option value="fa-shield">盾牌/防御</option>
+                        <option value="fa-sword">武器/攻击</option>
+                        <option value="fa-heart">爱心/生命</option>
+                        <option value="fa-key">钥匙</option>
+                        <option value="fa-scroll">卷轴/技能</option>
+                        <option value="fa-flask">药水</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>标识颜色</label>
+                    <div class="color-picker-row">
+                        <input type="color" id="input-rtype-color" value="#64748b"
+                            oninput="document.getElementById('rtype-color-hex').textContent=this.value">
+                        <span id="rtype-color-hex">#64748b</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="Modal.close('resource-type')">取消</button>
+                <button class="btn btn-primary" onclick="Modal.confirmResourceType()">确认创建</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框：子类型管理 -->
+    <div id="modal-subtype-manage" class="modal hidden">
+        <div class="modal-backdrop" onclick="Modal.close('subtype-manage')"></div>
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>自定义子类型</h2>
+                <button class="modal-close" onclick="Modal.close('subtype-manage')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="subtype-add-row">
+                    <input type="text" id="new-subtype-input" placeholder="新子类型名称" onkeydown="if(event.key==='Enter')PropertyPanel.addCustomSubType()">
+                    <button class="btn btn-primary btn-sm" onclick="PropertyPanel.addCustomSubType()">
+                        <i class="fas fa-plus"></i> 添加
+                    </button>
+                </div>
+                <div id="subtype-list" class="subtype-list">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="Modal.close('subtype-manage')">完成</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右键菜单 -->
+    <div id="context-menu" class="context-menu hidden">
+        <div class="context-item" onclick="ContextMenu.action('edit')">
+            <i class="fas fa-edit"></i> 编辑
+        </div>
+        <div class="context-item" onclick="ContextMenu.action('connect')">
+            <i class="fas fa-link"></i> 建立关系
+        </div>
+        <div class="context-divider"></div>
+        <div class="context-item danger" onclick="ContextMenu.action('delete')">
+            <i class="fas fa-trash"></i> 删除
+        </div>
+    </div>
+
+    <!-- 树节点右键菜单 -->
+    <div id="tree-context-menu" class="tree-context-menu hidden">
+        <div class="context-item" onclick="LeftPanel.treeContextAction('edit')">
+            <i class="fas fa-edit"></i> 编辑系统
+        </div>
+        <div class="context-item" onclick="LeftPanel.treeContextAction('addChild')">
+            <i class="fas fa-plus"></i> 添加子节点
+        </div>
+        <div class="context-item" onclick="LeftPanel.treeContextAction('duplicate')">
+            <i class="fas fa-copy"></i> 复制节点
+        </div>
+        <div class="context-divider"></div>
+        <div class="context-item danger" onclick="LeftPanel.treeContextAction('delete')">
+            <i class="fas fa-trash"></i> 删除
+        </div>
+    </div>
+
+    <!-- 隐藏的文件输入（用于导入） -->
+    <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="App.handleImportFile(event)">
+    
+    <!-- 快捷键帮助面板 -->
+    <div id="shortcut-help" class="shortcut-help hidden">
+        <h3>快捷键</h3>
+        <table>
+            <tr><td><kbd>Ctrl+S</td><td>保存项目</td></tr>
+            <tr><td><kbd>Ctrl+Z</td><td>撤销</td></tr>
+            <tr><td><kbd>Ctrl+Shift+Z</td><td>重做</td></tr>
+            <tr><td><kbd>Delete</td><td>删除选中</td></tr>
+            <tr><td><kbd>L</td><td>自动布局</td></tr>
+            <tr><td><kbd>R</td><td>重置视图</td></tr>
+            <tr><td><kbd>Esc</td><td>取消/关闭</td></tr>
+            <tr><td><kbd>双击节点</td><td>编辑属性</td></tr>
+        </table>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/canvas.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
