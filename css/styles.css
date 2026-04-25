@@ -490,7 +490,8 @@ body {
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    overflow: visible;
+    overflow: auto;
+    height: 100%;
 }
 
 .panel-tabs {
@@ -530,7 +531,8 @@ body {
     display: none;
     flex-direction: column;
     flex: 1;
-    overflow: hidden;
+    overflow-y: auto;
+    min-height: 0;
 }
 
 .tab-content.active {
