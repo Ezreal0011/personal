@@ -336,8 +336,18 @@ const Editor = {
      * 导出数据
      */
     exportData() {
-        const data = DataStore.exportData(DataStore.currentProjectId);
-        if (!data) return;
+        // 确保获取到项目ID
+        let projectId = DataStore.currentProjectId;
+        if (!projectId) {
+            const project = DataStore.getCurrentProject();
+            if (project) projectId = project.id;
+        }
+        
+        const data = DataStore.exportData(projectId);
+        if (!data) {
+            Toast.show('导出失败：未找到项目', 'error');
+            return;
+        }
         
         const jsonStr = JSON.stringify(data, null, 2);
         const blob = new Blob([jsonStr], { type: 'application/json' });
