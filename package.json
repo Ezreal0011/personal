@@ -1,0 +1,1 @@
+{"name":"game-resource-blueprint","version":"1.0.0","description":"游戏资源流向蓝图工具","main":"index.html","scripts":{"start":"npx serve -l 3000"},"dependencies":{"uuid":"^9.0.0"},"devDependencies":{"docx":"^9.6.1"}}
