@@ -1,7 +1,8 @@
-{
-  "version": "1.0.0",
-  "exportedAt": "2026-04-25T13:54:35.751Z",
-  "project": {
+// 综合游戏资源关系图示例数据
+const EXAMPLE_PROJECT = {
+  version: "1.0.0",
+  exportedAt: "2026-04-25T13:54:35.751Z",
+  project: {
     "id": "id_1777059477175_u312cbstm",
     "name": "zjcs",
     "version": "0.1",
@@ -2327,4 +2328,4 @@
       }
     ]
   }
-}
+};

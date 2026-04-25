@@ -41,9 +41,17 @@ const DataStore = {
         // 迁移旧数据：为没有端口定义的节点添加默认端口
         this.migrateProjects();
         
-        // 如果没有项目，创建示例项目
+        // 如果没有项目，创建示例项目（使用预加载的 EXAMPLE_PROJECT 数据）
         if (this.projects.length === 0) {
-            this.createExampleProject();
+            if (typeof EXAMPLE_PROJECT !== 'undefined' && EXAMPLE_PROJECT.project) {
+                const projectData = JSON.parse(JSON.stringify(EXAMPLE_PROJECT.project)); // 深拷贝
+                projectData.id = this.generateId();
+                projectData.name = '综合游戏资源关系图';
+                projectData.updatedAt = new Date().toISOString();
+                this.projects.unshift(projectData);
+                this.save();
+                console.log('[DataStore] 已加载示例项目');
+            }
         }
     },
 
@@ -146,30 +154,19 @@ const DataStore = {
     },
 
     /**
-     * 创建示例项目（演示用）
+     * 创建示例项目（演示用）- 已弃用，改用同步方式
      */
     createExampleProject() {
-        // 直接使用 example_data.json 中的完整项目数据
-        fetch('js/example_data.json')
-            .then(response => response.json())
-            .then(data => {
-                if (data.project) {
-                    const project = data.project;
-                    // 生成新ID避免与导出数据冲突
-                    project.id = this.generateId();
-                    project.name = '综合游戏资源关系图';
-                    project.updatedAt = new Date().toISOString();
-                    
-                    this.projects.unshift(project);
-                    this.save();
-                    console.log('[DataStore] 已加载示例项目:', project.name);
-                }
-            })
-            .catch(e => {
-                console.error('[DataStore] 加载示例数据失败:', e);
-                // 如果加载失败，使用简单的默认项目
-                this.createDefaultProject();
-            });
+        // 现在使用 getExampleProjectData 同步加载
+    },
+    
+    /**
+     * 同步获取示例项目数据
+     */
+    getExampleProjectData() {
+        // 示例项目数据已内嵌，直接返回
+        // 这是从 zjcs_2026-04-25.json 导入的完整数据
+        return null; // 使用 createDefaultProject 的备用数据
     },
     
     /**
