@@ -634,14 +634,48 @@ addEdge(sourceId, targetId, edgeData = {}) {
             const data = JSON.parse(jsonStr);
             if (!data.project) throw new Error('Invalid format');
             
-            data.project.id = this.generateId(); // 分配新ID避免冲突
-            data.project.name += ' (导入)';
-            data.project.updatedAt = new Date().toISOString();
+            const project = data.project;
+            project.id = this.generateId(); // 分配新ID避免冲突
+            project.name += ' (导入)';
+            project.updatedAt = new Date().toISOString();
             
-            this.projects.unshift(data.project);
+            // 迁移节点数据（确保有端口等字段）
+            const colorPalette = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#06b6d4', '#84cc16'];
+            
+            project.nodes.forEach(node => {
+                // 确保有端口
+                if (!node.inputPorts || !Array.isArray(node.inputPorts)) {
+                    node.inputPorts = [{ id: this.generatePortId(), name: '输入' }];
+                }
+                if (!node.outputPorts || !Array.isArray(node.outputPorts)) {
+                    node.outputPorts = [{ id: this.generatePortId(), name: '输出' }];
+                }
+                // 确保端口有ID
+                node.inputPorts.forEach(p => { if (!p.id) p.id = this.generatePortId(); });
+                node.outputPorts.forEach(p => { if (!p.id) p.id = this.generatePortId(); });
+                
+                // 确保根级系统节点有颜色和role
+                if (!node.parentId && node.type === 'system') {
+                    if (!node.parentColor) node.parentColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                    if (!node.role) node.role = 'output';
+                }
+                
+                // 确保资源节点有visible
+                if (node.type === 'resource') {
+                    if (node.visible === undefined) node.visible = true;
+                }
+            });
+            
+            // 确保边有端口字段
+            project.edges.forEach(edge => {
+                if (!edge.sourcePortId) edge.sourcePortId = null;
+                if (!edge.targetPortId) edge.targetPortId = null;
+            });
+            
+            this.projects.unshift(project);
             this.save();
             
-            return data.project;
+            return project;
         } catch (e) {
             console.error('Import failed:', e);
             return null;

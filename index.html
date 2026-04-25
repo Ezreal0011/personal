@@ -18,6 +18,9 @@
                 <button class="btn btn-primary" onclick="App.createNewProject()">
                     <i class="fas fa-plus"></i> 新建项目
                 </button>
+                <button class="btn" onclick="triggerImport()" title="导入JSON文件">
+                    <i class="fas fa-upload"></i> 导入项目
+                </button>
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" id="project-search" placeholder="搜索项目..." oninput="App.searchProjects(this.value)">
@@ -863,7 +866,7 @@
     </div>
 
     <!-- 隐藏的文件输入（用于导入） -->
-    <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="App.handleImportFile(event)">
+    <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="handleImportFile(event)">
     
     <!-- 快捷键帮助面板 -->
     <div id="shortcut-help" class="shortcut-help hidden">
@@ -883,6 +886,33 @@
     <!-- Toast 提示 -->
     <div id="toast-container" class="toast-container"></div>
 
+    <script>
+function triggerImport() {
+    document.getElementById('import-file-input').click();
+}
+
+function handleImportFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const project = DataStore.importData(e.target.result);
+            if (project) {
+                alert('导入成功：' + project.name);
+                location.reload();
+            } else {
+                alert('导入失败，文件格式不正确');
+            }
+        } catch (err) {
+            alert('导入失败：' + err.message);
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+</script>
     <script src="js/data.js"></script>
     <script src="js/canvas.js"></script>
     <script src="js/app.js"></script>
