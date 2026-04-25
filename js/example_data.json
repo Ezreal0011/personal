@@ -1,0 +1,2330 @@
+{
+  "version": "1.0.0",
+  "exportedAt": "2026-04-25T13:54:35.751Z",
+  "project": {
+    "id": "id_1777059477175_u312cbstm",
+    "name": "zjcs",
+    "version": "0.1",
+    "description": "",
+    "createdAt": "2026-04-24T19:37:57.175Z",
+    "updatedAt": "2026-04-24T19:37:57.175Z",
+    "customSubTypes": [
+      {
+        "id": "normal",
+        "name": "普通"
+      },
+      {
+        "id": "key",
+        "name": "关键"
+      },
+      {
+        "id": "daily",
+        "name": "日常"
+      },
+      {
+        "id": "weekly",
+        "name": "周常"
+      }
+    ],
+    "customResourceTypes": [
+      {
+        "id": "currency",
+        "name": "金币",
+        "icon": "fa-coins",
+        "color": "#f59e0b"
+      },
+      {
+        "id": "material",
+        "name": "粗矿",
+        "icon": "fa-gem",
+        "color": "#8b5cf6"
+      },
+      {
+        "id": "rt_1777061005955",
+        "name": "精华",
+        "icon": "fa-gem",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061035184",
+        "name": "时之沙",
+        "icon": "fa-gem",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061058973",
+        "name": "石头",
+        "icon": "fa-gem",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061065682",
+        "name": "木头",
+        "icon": "fa-gem",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061085778",
+        "name": "装备",
+        "icon": "fa-gem",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061096080",
+        "name": "技能",
+        "icon": "fa-gem",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061108365",
+        "name": "遗物",
+        "icon": "fa-gem",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061118876",
+        "name": "伙伴礼物",
+        "icon": "fa-gem",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061689169",
+        "name": "宠物粮",
+        "icon": "fa-box",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777061775098",
+        "name": "经验",
+        "icon": "fa-box",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777063191060",
+        "name": "精锻石",
+        "icon": "fa-box",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777063339210",
+        "name": "耀星",
+        "icon": "fa-coins",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777063369416",
+        "name": "晨星",
+        "icon": "fa-coins",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777064222270",
+        "name": "体力",
+        "icon": "fa-bolt",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777064407660",
+        "name": "突破材料",
+        "icon": "fa-bolt",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777065336031",
+        "name": "素材道具",
+        "icon": "fa-star",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777065827921",
+        "name": "祈愿卡",
+        "icon": "fa-box",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777065834706",
+        "name": "女神卡",
+        "icon": "fa-box",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777065844131",
+        "name": "结缘绳",
+        "icon": "fa-box",
+        "color": "#000000"
+      },
+      {
+        "id": "rt_1777066051366",
+        "name": "宠物",
+        "icon": "fa-box",
+        "color": "#000000"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "id_1777059533026_3gpa0oeaw",
+        "name": "主线地图探索",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_deal47",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_gzxfjc",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": null,
+        "subType": "normal",
+        "level": 1,
+        "x": 468.82798952363646,
+        "y": 256.55032482821264,
+        "tags": [],
+        "description": "",
+        "parentColor": "#3b82f6",
+        "role": "output"
+      },
+      {
+        "id": "id_1777060551549_t8axkdvgo",
+        "name": "打怪",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_big8ov",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_jq0o8v",
+            "name": "精华",
+            "portType": "value"
+          },
+          {
+            "id": "p_evy81x",
+            "name": "人物突破材料",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777059533026_3gpa0oeaw",
+        "subType": "normal",
+        "level": 2,
+        "x": 658.4976120607922,
+        "y": 912.4224850465106,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060576963_utxfmrdlh",
+        "name": "采集",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_cp0p5u",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_kkqv7j",
+            "name": "精华",
+            "portType": "value"
+          },
+          {
+            "id": "p_mk5h8z",
+            "name": "粗矿",
+            "portType": "value"
+          },
+          {
+            "id": "p_s6vr85",
+            "name": "金币",
+            "portType": "value"
+          },
+          {
+            "id": "p_l3w3gw",
+            "name": "时之沙",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777059533026_3gpa0oeaw",
+        "subType": "normal",
+        "level": 2,
+        "x": 662.7790267484132,
+        "y": 775.2896722653804,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060622756_y6gj3ucad",
+        "name": "宝箱",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_rpvpf6",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_uhmgf1",
+            "name": "晨星",
+            "portType": "value"
+          },
+          {
+            "id": "p_nrj4w3",
+            "name": "金币",
+            "portType": "value"
+          },
+          {
+            "id": "p_r67b1a",
+            "name": "装备",
+            "portType": "value"
+          },
+          {
+            "id": "p_e4gxpe",
+            "name": "精锻石",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777059533026_3gpa0oeaw",
+        "subType": "normal",
+        "level": 2,
+        "x": 658.2579186006336,
+        "y": 1022.0376157887433,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060639030_7kebnk178",
+        "name": "地图副本",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_pbg9y5",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_djocmg",
+            "name": "金币",
+            "portType": "value"
+          },
+          {
+            "id": "p_pp5f94",
+            "name": "晨星",
+            "portType": "value"
+          },
+          {
+            "id": "p_lcsjtv",
+            "name": "装备",
+            "portType": "value"
+          },
+          {
+            "id": "p_9vndmu",
+            "name": "精锻石",
+            "portType": "value"
+          },
+          {
+            "id": "p_zcrdu9",
+            "name": "精华",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777059533026_3gpa0oeaw",
+        "subType": "normal",
+        "level": 2,
+        "x": 664.846525488705,
+        "y": 610.1190807089076,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060673981_cuxkpniak",
+        "name": "家园系统",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_fb6n5e",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_u14ccn",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": null,
+        "subType": "normal",
+        "level": 1,
+        "x": 346.5039356830716,
+        "y": 312.28079441119337,
+        "tags": [],
+        "description": "",
+        "parentColor": "#8b5cf6",
+        "role": "output"
+      },
+      {
+        "id": "id_1777060693614_8tigzbc7r",
+        "name": "床",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_tsw7te",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_8cti97",
+            "name": "经验",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777060673981_cuxkpniak",
+        "subType": "normal",
+        "level": 2,
+        "x": 655.414240286117,
+        "y": 266.24290379851834,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060701577_8hhuxgsrb",
+        "name": "推车",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_khvsto",
+            "name": "输出"
+          },
+          {
+            "id": "p_t24kof",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_l21m06",
+            "name": "金币",
+            "portType": "value"
+          },
+          {
+            "id": "p_4q5qo0",
+            "name": "木头",
+            "portType": "value"
+          },
+          {
+            "id": "p_gxapgl",
+            "name": "石头",
+            "portType": "value"
+          },
+          {
+            "id": "p_7th8gy",
+            "name": "粗矿",
+            "portType": "value"
+          },
+          {
+            "id": "p_bfli7t",
+            "name": "时之沙",
+            "portType": "value"
+          },
+          {
+            "id": "p_l1m70o",
+            "name": "装备",
+            "portType": "value",
+            "dropTable": [
+              {
+                "prob": "",
+                "amount": 1
+              }
+            ]
+          },
+          {
+            "id": "p_iit6v6",
+            "name": "宠物粮",
+            "portType": "value"
+          },
+          {
+            "id": "p_280n2l",
+            "name": "精华",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777060673981_cuxkpniak",
+        "subType": "normal",
+        "level": 2,
+        "x": 660.2056263787214,
+        "y": 395.0915254939626,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060756222_9sn2ox0po",
+        "name": "副本系统",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_ffefs5",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_xgs8tl",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": null,
+        "subType": "normal",
+        "level": 1,
+        "x": 413.2802854307669,
+        "y": 299.0229805653772,
+        "tags": [],
+        "description": "",
+        "parentColor": "#10b981",
+        "role": "output"
+      },
+      {
+        "id": "id_1777060773987_q46h631ck",
+        "name": "金币副本",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_mmkay2",
+            "name": "稿子"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_pzwi80",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777060756222_9sn2ox0po",
+        "subType": "normal",
+        "level": 2,
+        "x": 437.312498132244,
+        "y": 539.5377177971754,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060794429_srf68giyh",
+        "name": "粗矿副本",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_98m0w4",
+            "name": "斧头"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_aa229h",
+            "name": "粗矿",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777060756222_9sn2ox0po",
+        "subType": "normal",
+        "level": 2,
+        "x": 453.3659483281654,
+        "y": 619.4602242988065,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060813697_patvspxpd",
+        "name": "精华副本",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_1ji4n3",
+            "name": "新输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_39mgom",
+            "name": "精华",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777060756222_9sn2ox0po",
+        "subType": "normal",
+        "level": 2,
+        "x": 458.2029590909811,
+        "y": 690.5735811510885,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777060846667_j4y0rp3mf",
+        "name": "时之沙副本",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_sd0pps",
+            "name": "铲子"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_m60b2x",
+            "name": "时之沙",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777060756222_9sn2ox0po",
+        "subType": "normal",
+        "level": 2,
+        "x": 456.5210529233155,
+        "y": 762.5369384506521,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777061133582_x3553tjdy",
+        "name": "金币_实例",
+        "type": "resource",
+        "resourceType": "currency",
+        "rarity": "common",
+        "x": 1025.7685613229773,
+        "y": 473.0700530316827,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_icfqr7",
+            "name": "金币"
+          },
+          {
+            "id": "p_yk0qvh",
+            "name": "金币"
+          },
+          {
+            "id": "p_27ocos",
+            "name": "金币"
+          },
+          {
+            "id": "p_zhfdh3",
+            "name": "金币"
+          },
+          {
+            "id": "p_kkigi2",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_6msv1i",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#f59e0b"
+      },
+      {
+        "id": "id_1777061139321_hi7jwon66",
+        "name": "粗矿_实例",
+        "type": "resource",
+        "resourceType": "material",
+        "rarity": "common",
+        "x": 1261.774567849568,
+        "y": 538.8918477394274,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_x715up",
+            "name": "粗矿"
+          },
+          {
+            "id": "p_ffkuqr",
+            "name": "粗矿"
+          },
+          {
+            "id": "p_cl9930",
+            "name": "粗矿"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_3fy2uf",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#8b5cf6"
+      },
+      {
+        "id": "id_1777061146111_ocg00thcn",
+        "name": "精华_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061005955",
+        "rarity": "common",
+        "x": 1259.0930454797592,
+        "y": 651.7437765736491,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_yn8inn",
+            "name": "精华"
+          },
+          {
+            "id": "p_fkwxng",
+            "name": "精华"
+          },
+          {
+            "id": "p_m4i28e",
+            "name": "精华"
+          },
+          {
+            "id": "p_iaw31w",
+            "name": "精华"
+          },
+          {
+            "id": "p_72vpzf",
+            "name": "精华"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_k7vbz5",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#3b82f6"
+      },
+      {
+        "id": "id_1777061150817_7dqqcim75",
+        "name": "时之沙_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061035184",
+        "rarity": "common",
+        "x": 1259.009414661205,
+        "y": 800.7924671632602,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_d1jmw4",
+            "name": "时之沙"
+          },
+          {
+            "id": "p_t227z9",
+            "name": "时之沙"
+          },
+          {
+            "id": "p_jcxmm3",
+            "name": "时之沙"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_hkbprq",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777061155266_5hftlcktz",
+        "name": "石头_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061058973",
+        "rarity": "common",
+        "x": 1262.9278128009082,
+        "y": 447.92547993609986,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_cyoo2q",
+            "name": "石头"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_wpwed2",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777061158904_qi6p3jfb4",
+        "name": "木头_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061065682",
+        "rarity": "common",
+        "x": 1263.9481616003638,
+        "y": 364.41619843178074,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_7bgaas",
+            "name": "木头"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_4zjn0q",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777061162188_l23i1wxgu",
+        "name": "装备_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061085778",
+        "rarity": "common",
+        "x": 1023.0138253873799,
+        "y": 627.5354124543697,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_3vn9n2",
+            "name": "装备"
+          },
+          {
+            "id": "p_y1vhzz",
+            "name": "装备"
+          },
+          {
+            "id": "p_48x6mb",
+            "name": "装备"
+          },
+          {
+            "id": "p_hx83wk",
+            "name": "装备"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_pdrg81",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777061178740_m8pa7t5q9",
+        "name": "技能_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061096080",
+        "rarity": "common",
+        "x": 1020.8270693820635,
+        "y": 745.4689799143713,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_5e50s9",
+            "name": "技能"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_ae3b8m",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777061181032_bz27rbyzw",
+        "name": "遗物_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061108365",
+        "rarity": "common",
+        "x": 1026.298055491317,
+        "y": 824.8915953947377,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_df777a",
+            "name": "遗物"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_s6n88u",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777061185710_sem5vfi7k",
+        "name": "伙伴礼物_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061118876",
+        "rarity": "common",
+        "x": 1028.7539558537808,
+        "y": 907.9950725675848,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_lgt52n",
+            "name": "伙伴道具"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_rkg9e6",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777061693439_3w2x81weu",
+        "name": "宠物粮_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061689169",
+        "rarity": "common",
+        "x": 1030.6153526332298,
+        "y": 991.0676351703781,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_g71mq7",
+            "name": "宠物粮"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_fdc1wo",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777061778030_xl5cgwc6h",
+        "name": "经验_实例",
+        "type": "resource",
+        "resourceType": "rt_1777061775098",
+        "rarity": "common",
+        "x": 1010.9963388158602,
+        "y": 304.31236233145756,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_9k2xo3",
+            "name": "经验"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_kl250b",
+            "name": "经验",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777063240414_riuuf5vl3",
+        "name": "精锻石_实例",
+        "type": "resource",
+        "resourceType": "rt_1777063191060",
+        "rarity": "common",
+        "x": 1268.8749905125783,
+        "y": 909.5484314414423,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_rg72je",
+            "name": "精锻石"
+          },
+          {
+            "id": "p_riazxl",
+            "name": "精锻石"
+          },
+          {
+            "id": "p_i9qxbi",
+            "name": "精矿石"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_gp63vk",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777063353472_v4dsln36o",
+        "name": "耀星_实例",
+        "type": "resource",
+        "resourceType": "rt_1777063339210",
+        "rarity": "common",
+        "x": 781.8497094350603,
+        "y": 178.42688212070988,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_1ig1f7",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_sgzc06",
+            "name": "晨星",
+            "portType": "value"
+          },
+          {
+            "id": "p_thb1w5",
+            "name": "新输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777063375252_vfqbwr6o9",
+        "name": "晨星_实例",
+        "type": "resource",
+        "resourceType": "rt_1777063369416",
+        "rarity": "common",
+        "x": 1011.9441199796539,
+        "y": 375.9141169531038,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_8n70c5",
+            "name": "晨星"
+          },
+          {
+            "id": "p_aq0sqt",
+            "name": "晨星"
+          },
+          {
+            "id": "p_lz5uvu",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_0js6xo",
+            "name": "金币",
+            "portType": "value"
+          },
+          {
+            "id": "p_wof1aj",
+            "name": "金币",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777064225132_bjjfk04ta",
+        "name": "体力",
+        "type": "resource",
+        "resourceType": "rt_1777064222270",
+        "rarity": "common",
+        "x": 434.93414808037465,
+        "y": 873.454287096563,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_w76u0e",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_gg9rk3",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777064416398_dhyt2y2w4",
+        "name": "人物突破材料",
+        "type": "resource",
+        "resourceType": "rt_1777064407660",
+        "rarity": "common",
+        "x": 1267.9774730875392,
+        "y": 1053.1652349626318,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_w46pbu",
+            "name": "人物突破材料"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_i8cq6f",
+            "name": "人物突破材料",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777065265694_cpfhctaw7",
+        "name": "石头",
+        "type": "resource",
+        "resourceType": "rt_1777061058973",
+        "rarity": "common",
+        "x": 437.53149199595424,
+        "y": 442.6913385044298,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_lc07et",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_b8l50i",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777065267597_y8gnogk7a",
+        "name": "木头",
+        "type": "resource",
+        "resourceType": "rt_1777061065682",
+        "rarity": "common",
+        "x": 435.5398447329988,
+        "y": 366.0129188806432,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_wp09aj",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_39u3oo",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777065341581_h0gcgrbrw",
+        "name": "素材道具_实例",
+        "type": "resource",
+        "resourceType": "rt_1777065336031",
+        "rarity": "common",
+        "x": 222.29262784611547,
+        "y": 602.1863843456454,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_9q2sbo",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_6wjzns",
+            "name": "稿子",
+            "portType": "value"
+          },
+          {
+            "id": "p_2nzra8",
+            "name": "斧头",
+            "portType": "value"
+          },
+          {
+            "id": "p_8zl7h4",
+            "name": "铲子",
+            "portType": "value"
+          },
+          {
+            "id": "p_aff4c7",
+            "name": "新输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777065560096_oj2z6u1mr",
+        "name": "商店",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_lr1jr6",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_3innct",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": null,
+        "subType": "normal",
+        "level": 1,
+        "x": 387.21843671623253,
+        "y": 244.95112461727794,
+        "tags": [],
+        "description": "",
+        "parentColor": "#f59e0b",
+        "role": "output"
+      },
+      {
+        "id": "id_1777065567249_mmm0zgvs9",
+        "name": "摊贩",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_o71ix6",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_sq5zmd",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777065560096_oj2z6u1mr",
+        "subType": "normal",
+        "level": 2,
+        "x": 8.000532204219638,
+        "y": 617.633967743087,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777065622486_l06hhnbmc",
+        "name": "晨星_实例",
+        "type": "resource",
+        "resourceType": "rt_1777063369416",
+        "rarity": "common",
+        "x": -9.760876560145022,
+        "y": 770.8115789414775,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_w0aew2",
+            "name": "新输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_0dako0",
+            "name": "输出",
+            "portType": "value"
+          },
+          {
+            "id": "p_7rfw1z",
+            "name": "新输出",
+            "portType": "value"
+          },
+          {
+            "id": "p_srbwoo",
+            "name": "新输出",
+            "portType": "value"
+          },
+          {
+            "id": "p_8yzw6z",
+            "name": "新输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777065735239_o22fk9xbs",
+        "name": "抽奖系统",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_w4fjmd",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_243o7s",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": null,
+        "subType": "normal",
+        "level": 1,
+        "x": 353.39261972616237,
+        "y": 346.0342234586372,
+        "tags": [],
+        "description": "",
+        "parentColor": "#ef4444",
+        "role": "output"
+      },
+      {
+        "id": "id_1777065762050_ctct6sp0j",
+        "name": "女神祈愿",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_6a5anj",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_h6s3gi",
+            "name": "技能",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777065735239_o22fk9xbs",
+        "subType": "normal",
+        "level": 2,
+        "x": 426.48021481639427,
+        "y": 980.8189224546097,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777065778126_68rce4gsw",
+        "name": "扭蛋机",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_8clmic",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_ja7ulh",
+            "name": "遗物",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777065735239_o22fk9xbs",
+        "subType": "normal",
+        "level": 2,
+        "x": 430.12280031322837,
+        "y": 1062.9806410203707,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777065795109_4puh850is",
+        "name": "结缘树",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_gsjftp",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_s8xw6s",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777065735239_o22fk9xbs",
+        "subType": "normal",
+        "level": 2,
+        "x": 446.720776270585,
+        "y": 1123.3590391438286,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777065849107_4qjeticjg",
+        "name": "祈愿卡_实例",
+        "type": "resource",
+        "resourceType": "rt_1777065827921",
+        "rarity": "common",
+        "x": 256,
+        "y": 942.3333320617676,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_4h7v9u",
+            "name": "新输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_pmi5y9",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777065852007_1hmwmidl4",
+        "name": "女神卡_实例",
+        "type": "resource",
+        "resourceType": "rt_1777065834706",
+        "rarity": "common",
+        "x": 249,
+        "y": 1025.3333320617676,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_ko1z56",
+            "name": "新输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_cws2e7",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777065854152_d3qd19vqx",
+        "name": "结缘绳_实例",
+        "type": "resource",
+        "resourceType": "rt_1777065844131",
+        "rarity": "common",
+        "x": 242,
+        "y": 1110.3333320617676,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_prijgp",
+            "name": "新输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_csaup6",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777066054622_jp62hzvki",
+        "name": "宠物&碎片",
+        "type": "resource",
+        "resourceType": "rt_1777066051366",
+        "rarity": "common",
+        "x": 1037,
+        "y": 1077.3333320617676,
+        "tags": [],
+        "description": "",
+        "inputPorts": [
+          {
+            "id": "p_qlcrc9",
+            "name": "输出"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_1qlx4n",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "visible": true,
+        "quantity": null,
+        "nodeColor": "#000000"
+      },
+      {
+        "id": "id_1777066140437_72lwi8e71",
+        "name": "日常副本",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_xoxo14",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_r59jw5",
+            "name": "装备",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777060756222_9sn2ox0po",
+        "subType": "normal",
+        "level": 2,
+        "x": 257.395638063879,
+        "y": 761.2893674137383,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777066210016_b1bhdv7er",
+        "name": "圣兽活动",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_h7uwee",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_tkq7es",
+            "name": "伙伴道具",
+            "portType": "value"
+          },
+          {
+            "id": "p_3igmat",
+            "name": "精矿石",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777060756222_9sn2ox0po",
+        "subType": "normal",
+        "level": 2,
+        "x": 253.511101301329,
+        "y": 852.256241999886,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777066325991_tpk140ug2",
+        "name": "人物养成",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_vnk9ry",
+            "name": "输入"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_594227",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": null,
+        "subType": "normal",
+        "level": 1,
+        "x": 485.5916051048084,
+        "y": 227.62724990640635,
+        "tags": [],
+        "description": "",
+        "parentColor": "#ec4899",
+        "role": "consume"
+      },
+      {
+        "id": "id_1777066335147_kprnfjwvw",
+        "name": "人物升级",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_d4wdi2",
+            "name": "经验"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_4n6dnf",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777066325991_tpk140ug2",
+        "subType": "normal",
+        "level": 2,
+        "x": 1486.0214068735677,
+        "y": 452.1532928834862,
+        "tags": [],
+        "description": ""
+      },
+      {
+        "id": "id_1777066341946_2ydleumwo",
+        "name": "人物突破",
+        "type": "system",
+        "inputPorts": [
+          {
+            "id": "p_l6tp8c",
+            "name": "输出"
+          },
+          {
+            "id": "p_x5kru3",
+            "name": "人物突破材料"
+          }
+        ],
+        "outputPorts": [
+          {
+            "id": "p_o0dsam",
+            "name": "输出",
+            "portType": "value"
+          }
+        ],
+        "parentId": "id_1777066325991_tpk140ug2",
+        "subType": "normal",
+        "level": 2,
+        "x": 1488.4378852195732,
+        "y": 536.7720451178307,
+        "tags": [],
+        "description": ""
+      }
+    ],
+    "edges": [
+      {
+        "id": "id_1777061591220_nxd35qkk1",
+        "source": "id_1777060701577_8hhuxgsrb",
+        "target": "id_1777061158904_qi6p3jfb4",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_4q5qo0",
+        "targetPortId": "p_7bgaas"
+      },
+      {
+        "id": "id_1777061610423_7a9iu7mtc",
+        "source": "id_1777060701577_8hhuxgsrb",
+        "target": "id_1777061155266_5hftlcktz",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_gxapgl",
+        "targetPortId": "p_cyoo2q"
+      },
+      {
+        "id": "id_1777061622098_yhfxqqbed",
+        "source": "id_1777060701577_8hhuxgsrb",
+        "target": "id_1777061139321_hi7jwon66",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_7th8gy",
+        "targetPortId": "p_x715up"
+      },
+      {
+        "id": "id_1777061645564_r0qfslcyp",
+        "source": "id_1777060701577_8hhuxgsrb",
+        "target": "id_1777061146111_ocg00thcn",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_280n2l",
+        "targetPortId": "p_yn8inn"
+      },
+      {
+        "id": "id_1777061653423_o4hywwhr4",
+        "source": "id_1777060701577_8hhuxgsrb",
+        "target": "id_1777061150817_7dqqcim75",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_bfli7t",
+        "targetPortId": "p_d1jmw4"
+      },
+      {
+        "id": "id_1777061667985_cdzhsn57d",
+        "source": "id_1777060701577_8hhuxgsrb",
+        "target": "id_1777061162188_l23i1wxgu",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_l1m70o",
+        "targetPortId": "p_3vn9n2"
+      },
+      {
+        "id": "id_1777061704178_gqmnz7xxd",
+        "source": "id_1777060701577_8hhuxgsrb",
+        "target": "id_1777061693439_3w2x81weu",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_iit6v6",
+        "targetPortId": "p_g71mq7"
+      },
+      {
+        "id": "id_1777061807921_9d8lt4m9h",
+        "source": "id_1777060693614_8tigzbc7r",
+        "target": "id_1777061778030_xl5cgwc6h",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_8cti97",
+        "targetPortId": "p_9k2xo3"
+      },
+      {
+        "id": "id_1777063425808_y656648s5",
+        "source": "id_1777060701577_8hhuxgsrb",
+        "target": "id_1777061133582_x3553tjdy",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_l21m06",
+        "targetPortId": "p_icfqr7"
+      },
+      {
+        "id": "id_1777063440302_m6pdchaoa",
+        "source": "id_1777060639030_7kebnk178",
+        "target": "id_1777061133582_x3553tjdy",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_djocmg",
+        "targetPortId": "p_yk0qvh"
+      },
+      {
+        "id": "id_1777063493950_4qqfknsyk",
+        "source": "id_1777060639030_7kebnk178",
+        "target": "id_1777063375252_vfqbwr6o9",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_pp5f94",
+        "targetPortId": "p_8n70c5"
+      },
+      {
+        "id": "id_1777063856148_txbh1nrf6",
+        "source": "id_1777060639030_7kebnk178",
+        "target": "id_1777061162188_l23i1wxgu",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_lcsjtv",
+        "targetPortId": "p_y1vhzz"
+      },
+      {
+        "id": "id_1777063987513_d1adbbn8o",
+        "source": "id_1777060639030_7kebnk178",
+        "target": "id_1777063240414_riuuf5vl3",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_9vndmu",
+        "targetPortId": "p_rg72je"
+      },
+      {
+        "id": "id_1777064075900_4c818y8du",
+        "source": "id_1777060639030_7kebnk178",
+        "target": "id_1777061146111_ocg00thcn",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_zcrdu9",
+        "targetPortId": "p_fkwxng"
+      },
+      {
+        "id": "id_1777064137252_8afwaszb8",
+        "source": "id_1777060576963_utxfmrdlh",
+        "target": "id_1777061146111_ocg00thcn",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_kkqv7j",
+        "targetPortId": "p_m4i28e"
+      },
+      {
+        "id": "id_1777064144618_ttohwn51p",
+        "source": "id_1777060576963_utxfmrdlh",
+        "target": "id_1777061139321_hi7jwon66",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_mk5h8z",
+        "targetPortId": "p_ffkuqr"
+      },
+      {
+        "id": "id_1777064152275_8rg6drr2p",
+        "source": "id_1777060576963_utxfmrdlh",
+        "target": "id_1777061133582_x3553tjdy",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_s6vr85",
+        "targetPortId": "p_27ocos"
+      },
+      {
+        "id": "id_1777064160513_vhidzw1ty",
+        "source": "id_1777060576963_utxfmrdlh",
+        "target": "id_1777061150817_7dqqcim75",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_l3w3gw",
+        "targetPortId": "p_t227z9"
+      },
+      {
+        "id": "id_1777064229800_9ly3dcsk2",
+        "source": "id_1777064225132_bjjfk04ta",
+        "target": "id_1777060576963_utxfmrdlh",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_gg9rk3",
+        "targetPortId": "p_cp0p5u"
+      },
+      {
+        "id": "id_1777064279302_gfuxph6l4",
+        "source": "id_1777064225132_bjjfk04ta",
+        "target": "id_1777060551549_t8axkdvgo",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_gg9rk3",
+        "targetPortId": "p_big8ov"
+      },
+      {
+        "id": "id_1777064447646_71o2q6wih",
+        "source": "id_1777060551549_t8axkdvgo",
+        "target": "id_1777064416398_dhyt2y2w4",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_evy81x",
+        "targetPortId": "p_w46pbu"
+      },
+      {
+        "id": "id_1777064503731_zpmptqdon",
+        "source": "id_1777060551549_t8axkdvgo",
+        "target": "id_1777061146111_ocg00thcn",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_jq0o8v",
+        "targetPortId": "p_iaw31w"
+      },
+      {
+        "id": "id_1777064668539_t1a184fv3",
+        "source": "id_1777060622756_y6gj3ucad",
+        "target": "id_1777063240414_riuuf5vl3",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_e4gxpe",
+        "targetPortId": "p_riazxl"
+      },
+      {
+        "id": "id_1777064677647_lzlurucax",
+        "source": "id_1777060622756_y6gj3ucad",
+        "target": "id_1777061162188_l23i1wxgu",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_r67b1a",
+        "targetPortId": "p_48x6mb"
+      },
+      {
+        "id": "id_1777064685721_q5jgq1qgt",
+        "source": "id_1777060622756_y6gj3ucad",
+        "target": "id_1777061133582_x3553tjdy",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_nrj4w3",
+        "targetPortId": "p_zhfdh3"
+      },
+      {
+        "id": "id_1777064702427_xowxp53f8",
+        "source": "id_1777060622756_y6gj3ucad",
+        "target": "id_1777063375252_vfqbwr6o9",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_uhmgf1",
+        "targetPortId": "p_aq0sqt"
+      },
+      {
+        "id": "id_1777064717894_jqhmpmwd0",
+        "source": "id_1777063353472_v4dsln36o",
+        "target": "id_1777063375252_vfqbwr6o9",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_sgzc06",
+        "targetPortId": "p_lz5uvu"
+      },
+      {
+        "id": "id_1777065040238_4mtpluzpp",
+        "source": "id_1777060773987_q46h631ck",
+        "target": "id_1777061133582_x3553tjdy",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_pzwi80",
+        "targetPortId": "p_kkigi2"
+      },
+      {
+        "id": "id_1777065103752_vkbyn25rl",
+        "source": "id_1777060794429_srf68giyh",
+        "target": "id_1777061139321_hi7jwon66",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_aa229h",
+        "targetPortId": "p_cl9930"
+      },
+      {
+        "id": "id_1777065119905_2072a0b4e",
+        "source": "id_1777060813697_patvspxpd",
+        "target": "id_1777061146111_ocg00thcn",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_39mgom",
+        "targetPortId": "p_72vpzf"
+      },
+      {
+        "id": "id_1777065163827_hqdt5842s",
+        "source": "id_1777060846667_j4y0rp3mf",
+        "target": "id_1777061150817_7dqqcim75",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_m60b2x",
+        "targetPortId": "p_jcxmm3"
+      },
+      {
+        "id": "id_1777065278546_v7o0c6rv0",
+        "source": "id_1777065267597_y8gnogk7a",
+        "target": "id_1777060701577_8hhuxgsrb",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_39u3oo",
+        "targetPortId": "p_khvsto"
+      },
+      {
+        "id": "id_1777065281171_g9l6oq2xb",
+        "source": "id_1777065265694_cpfhctaw7",
+        "target": "id_1777060701577_8hhuxgsrb",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_b8l50i",
+        "targetPortId": "p_t24kof"
+      },
+      {
+        "id": "id_1777065421398_6vx35qu68",
+        "source": "id_1777065341581_h0gcgrbrw",
+        "target": "id_1777060773987_q46h631ck",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_6wjzns",
+        "targetPortId": "p_mmkay2"
+      },
+      {
+        "id": "id_1777065432022_vdqzdoqcu",
+        "source": "id_1777065341581_h0gcgrbrw",
+        "target": "id_1777060794429_srf68giyh",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_2nzra8",
+        "targetPortId": "p_98m0w4"
+      },
+      {
+        "id": "id_1777065439322_27abrnbq3",
+        "source": "id_1777065341581_h0gcgrbrw",
+        "target": "id_1777060813697_patvspxpd",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_aff4c7",
+        "targetPortId": "p_1ji4n3"
+      },
+      {
+        "id": "id_1777065442421_c96bp2xcd",
+        "source": "id_1777065341581_h0gcgrbrw",
+        "target": "id_1777060846667_j4y0rp3mf",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_8zl7h4",
+        "targetPortId": "p_sd0pps"
+      },
+      {
+        "id": "id_1777065591978_55wvk3e9u",
+        "source": "id_1777065567249_mmm0zgvs9",
+        "target": "id_1777065341581_h0gcgrbrw",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_sq5zmd",
+        "targetPortId": "p_9q2sbo"
+      },
+      {
+        "id": "id_1777065632517_26z9onlrz",
+        "source": "id_1777065622486_l06hhnbmc",
+        "target": "id_1777065567249_mmm0zgvs9",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_0dako0",
+        "targetPortId": "p_o71ix6"
+      },
+      {
+        "id": "id_1777065866678_4dbgtd9d5",
+        "source": "id_1777065849107_4qjeticjg",
+        "target": "id_1777065762050_ctct6sp0j",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_pmi5y9",
+        "targetPortId": "p_6a5anj"
+      },
+      {
+        "id": "id_1777065869097_1ukc8osng",
+        "source": "id_1777065852007_1hmwmidl4",
+        "target": "id_1777065778126_68rce4gsw",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_cws2e7",
+        "targetPortId": "p_8clmic"
+      },
+      {
+        "id": "id_1777065871587_dgv68bl2t",
+        "source": "id_1777065854152_d3qd19vqx",
+        "target": "id_1777065795109_4puh850is",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_csaup6",
+        "targetPortId": "p_gsjftp"
+      },
+      {
+        "id": "id_1777065893495_qex9foysq",
+        "source": "id_1777065622486_l06hhnbmc",
+        "target": "id_1777065849107_4qjeticjg",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_7rfw1z",
+        "targetPortId": "p_4h7v9u"
+      },
+      {
+        "id": "id_1777065895527_swv270gko",
+        "source": "id_1777065622486_l06hhnbmc",
+        "target": "id_1777065852007_1hmwmidl4",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_srbwoo",
+        "targetPortId": "p_ko1z56"
+      },
+      {
+        "id": "id_1777065900017_dh7stdnr8",
+        "source": "id_1777065622486_l06hhnbmc",
+        "target": "id_1777065854152_d3qd19vqx",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_8yzw6z",
+        "targetPortId": "p_prijgp"
+      },
+      {
+        "id": "id_1777065988680_sk9q8aif7",
+        "source": "id_1777065762050_ctct6sp0j",
+        "target": "id_1777061178740_m8pa7t5q9",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_h6s3gi",
+        "targetPortId": "p_5e50s9"
+      },
+      {
+        "id": "id_1777066012465_s7olwxomh",
+        "source": "id_1777065778126_68rce4gsw",
+        "target": "id_1777061181032_bz27rbyzw",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_ja7ulh",
+        "targetPortId": "p_df777a"
+      },
+      {
+        "id": "id_1777066060831_gnr41l96y",
+        "source": "id_1777065795109_4puh850is",
+        "target": "id_1777066054622_jp62hzvki",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_s8xw6s",
+        "targetPortId": "p_qlcrc9"
+      },
+      {
+        "id": "id_1777066189597_8udcgzm88",
+        "source": "id_1777066140437_72lwi8e71",
+        "target": "id_1777061162188_l23i1wxgu",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_r59jw5",
+        "targetPortId": "p_hx83wk"
+      },
+      {
+        "id": "id_1777066254604_2jassosjl",
+        "source": "id_1777066210016_b1bhdv7er",
+        "target": "id_1777061185710_sem5vfi7k",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_tkq7es",
+        "targetPortId": "p_lgt52n"
+      },
+      {
+        "id": "id_1777066287814_h3he9j9pq",
+        "source": "id_1777066210016_b1bhdv7er",
+        "target": "id_1777063240414_riuuf5vl3",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_3igmat",
+        "targetPortId": "p_i9qxbi"
+      },
+      {
+        "id": "id_1777066374547_u0hznduj5",
+        "source": "id_1777061778030_xl5cgwc6h",
+        "target": "id_1777066335147_kprnfjwvw",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_kl250b",
+        "targetPortId": "p_d4wdi2",
+        "color": "#ec4899"
+      },
+      {
+        "id": "id_1777066424265_ag40rjf1y",
+        "source": "id_1777064416398_dhyt2y2w4",
+        "target": "id_1777066341946_2ydleumwo",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_i8cq6f",
+        "targetPortId": "p_x5kru3",
+        "color": "#ec4899"
+      },
+      {
+        "id": "id_1777066528498_dtwf75yep",
+        "source": "id_1777061133582_x3553tjdy",
+        "target": "id_1777066341946_2ydleumwo",
+        "type": "output",
+        "valueType": "fixed",
+        "splitType": "value",
+        "splitValue": null,
+        "splitAmount": 1,
+        "sourcePortId": "p_6msv1i",
+        "targetPortId": "p_l6tp8c"
+      }
+    ]
+  }
+}

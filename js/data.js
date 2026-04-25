@@ -149,6 +149,33 @@ const DataStore = {
      * 创建示例项目（演示用）
      */
     createExampleProject() {
+        // 直接使用 example_data.json 中的完整项目数据
+        fetch('js/example_data.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data.project) {
+                    const project = data.project;
+                    // 生成新ID避免与导出数据冲突
+                    project.id = this.generateId();
+                    project.name = '综合游戏资源关系图';
+                    project.updatedAt = new Date().toISOString();
+                    
+                    this.projects.unshift(project);
+                    this.save();
+                    console.log('[DataStore] 已加载示例项目:', project.name);
+                }
+            })
+            .catch(e => {
+                console.error('[DataStore] 加载示例数据失败:', e);
+                // 如果加载失败，使用简单的默认项目
+                this.createDefaultProject();
+            });
+    },
+    
+    /**
+     * 创建默认项目（备用）
+     */
+    createDefaultProject() {
         const exampleProject = {
             id: this.generateId(),
             name: '卡牌养成资源关系图',
