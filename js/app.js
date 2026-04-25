@@ -3,7 +3,7 @@
  */
 // ==================== 全局对象 ====================
 const App = {
-    currentTheme: 'light',
+    currentTheme: 'dark',
     
     /**
      * 初始化应用
@@ -12,7 +12,7 @@ const App = {
         DataStore.init();
         
         // 恢复主题设置
-        const savedTheme = localStorage.getItem('blueprint-theme') || 'light';
+        const savedTheme = localStorage.getItem('blueprint-theme') || 'dark';
         this.setTheme(savedTheme, false);
         
         this.showPage('home');
